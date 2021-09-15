@@ -1,5 +1,7 @@
 ## Joel Moreira 
+Bioinformatics Student in Lund University
 [Link](www.linkedin.com/in/joel-moreira-529b5a193)
+
 
 ### About me
 
