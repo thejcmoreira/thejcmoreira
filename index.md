@@ -1,8 +1,8 @@
-## Welcome to GitHub Pages
+## Joel Moreira 
+[Link](www.linkedin.com/in/joel-moreira-529b5a193)
 
-You can use the [editor on GitHub](https://github.com/thejcmoreira/thejcmoreira/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+
 
 ### Markdown
 
