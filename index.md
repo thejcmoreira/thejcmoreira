@@ -1,29 +1,23 @@
 ## Joel Moreira 
 [Link](www.linkedin.com/in/joel-moreira-529b5a193)
 
-
-
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### About me
 
 ```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+I currently have a Bsc Degree in Medical Biotechnology 
+from the School of Health of Polytechnic Institute of Porto, 
+also enrolled in the first year of the Master's Degree in 
+Bioinformatics and Computational Biology at Faculty of Science 
+- Oporto's University and I'm currently studying Bioinformatics (Master's Degree) in Lund University.
 
-- Bulleted
-- List
+My Bachelor's thesis was based on the Computational Chemistry area,
+concretely by searching for new drug candidates with antibiofilm activity
+against bacteria using Molecular Docking and Virtual Screening.
+I consider having extraordinary experiences in interpersonal and 
+international relations due to previous projects.
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+[Image](src)
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
