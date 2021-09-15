@@ -1,0 +1,213 @@
+
+
+  >>>>>>>>>>>> Final Assigment- Joel Moreira<<<<<<<<<<<<<<<<\
+					202008682
+\
+#Execute a SNP calling and annotate the identified SNPs using the following SRA numbers: SRR2125267, SRR2125268, SRR2125272, SRR2125297
+\
+
+\
+#Download the genome 
+\
+
+\
+	>>wget http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz
+\
+
+\
+#Extract the output alignments overlapping the input BED
+
+
+\
+	>>cp home/lucia.pardal/files_bed/file_11.bed .
+\
+
+\
+#Script to download the SRR Files (2125267, 2125268, 2125272, 2125297). This will create 2 separate files of each SRR.
+\
+
+\
+	>>vi scriptd.sh
+\		
+\
+sra_list=(
+\
+2125267
+\
+2125268
+\
+2125272
+\
+2125297
+\
+) 
+\
+
+\
+for sra_id in $\{sra_list[@]\}
+\
+do
+\
+fastq-dump --split-files -gzip  SRR$\{sra_id\} 
+\
+done\
+
+\
+\
+\
+
+\
+	>>chmod a+x script.sh #Give Permission\
+	>> nohup ./scriptd.sh>SRRfile.out& #Run in nohup
+\
+
+\
+#Unzip the h38.fa.gz
+\
+
+\
+	>>gunzip hg38.fa.gz
+\
+
+\
+
+\
+	>>screen -S indexgenoma #create a screen
+\
+	>> bwa index hg38.fa
+\
+
+\
+#Creation of a second script
+\
+
+\
+	>> vi script2bwa.sh\
+\		
+\
+sra_list=(
+\
+2125267
+\
+2125268
+\
+2125272
+\
+2125297
+\
+) 
+\
+
+\
+for sra_id in $\{sra_list[@]\}
+\
+do
+\
+bwa mem -t3 hg38.fa SRR$\{sra_id\}"_1.fastq.gz" SRR$\{sra_id\}"_2.fastq.gz" > SRR$\{sra_id\}".sam" 
+\
+done
+\
+\
+\
+\
+\ 	>>chmod a+x script2bwa.sh #Give Permission\
+	>> nohup ./script2bwa.sh>script2.out& #Run in nohup
+\ 
+\
+#Creatinng the 3rd script
+\
+
+\
+	vi script3b.sh
+\
+\
+sra_list=(
+\
+2125267
+\
+2125268
+\
+2125272
+\
+2125297
+\
+) 
+\
+
+\
+for sra_id in $\{sra_list[@]\}
+\
+do
+\
+samtools view -@3 -Sb -L file_11.bed SRR$\{sra_id\}".sam" > SRR$\{sra_id\}".bam" 
+\
+samtools sort -@3 -n -o SRR$\{sra_id\}"_sort.bam" -O BAM SRR$\{sra_id\}".bam"
+\
+samtools fixmate -@3 -m SRR$\{sra_id\}"_sort.bam" SRR$\{sra_id\}"_fixd.bam"
+\
+samtools sort -@3 -o SRR$\{sra_id\}"_crom.bam" -O BAM SRR$\{sra_id\}"_fixd.bam"
+\
+samtools index -@3 SRR$\{sra_id\}"_crom.bam"
+\
+samtools markdup -@3 -r -s SRR$\{sra_id\}"_crom.bam" SRR$\{sra_id\}\'94_final.bam"\ 
+\
+done
+\
+	>>chmod a+x script3b.sh #Give Permission\
+	>> nohup ./script3b.sh>script3b.out& #Run in nohup\
+
+\
+	>>samtools mpileup -d 2000 -uf hg38.fa *_end.bam | bcftools call -mv > nofilt.vcf&
+\
+	>>bcftools filter -s LowQual -e '%QUAL<20||DP>100' nofilt.vcf > a3final.vcf&
+\
+
+\
+
+\
+#Download snpEff
+\
+	wget https://sourceforge.net/projects/snpeff/files/snpEff_v4_3t_core.zip
+\
+	unzip snpEff_v4_3t_core.zip #Unzip
+\
+
+\
+
+\
+	#Inside the new directory
+\
+	java -jar snpEff.jar download hg38
+\
+	java -jar snpEff.jar hg38 /home/up202008682/NGS/Assignment3/a3final.vcf > final.vcf
+\
+
+\
+
+\
+#ANALYSE THE HTML\
+\
+SnpEff: Variant Analysis\
+\
+By the first tables we can see that were found 123 warnings but most importantly 0 errors, also we can see that the 
+73,210 variants had a much higher number of effects: 
+
+In Number Varients by type we can see that:\
+\
+SNP (single-nucleotide polymorphism): 69,528 (Changes of the nucleotides)
+\
+INS (insertion): 1,573 (Insertion of a nucleotide)
+\
+DEL (deletion): 2,109 (Deletions of a nucleotide)\
+\
+The impact of the effects was 2,49% High (Possible Malign), 11,57% Low( Possible Bening) and 10,37% Moderate;\
+\
+Also, only 0,77% of the variants were nonsense and 45,46% silent (with possibly no changes in the protein), however 53,76% of the variants were missense.\
+\
+Also the effects of the variants was mainly in the introns (55,58%) which is a good thing since we know that they are not being translated.\
+\
+The Quality graph shows that a major part of our variants have a low quality and the insertions and deletions were short in lengt.\
+\
+By the codon changes map we can say that more changes happened in the trade between the ACC and CCC codons (936) and between GGG and GTG
+\
+}
