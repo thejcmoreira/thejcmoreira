@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @thejcmoreira
 - 👀 I’m interested in Computational Chemistry, Molecular Bioinformatics, in silico drug research.
-- 🌱 I’m currently learning Bioinformatics, Lund University
+- 🌱 I’m currently learning Bioinformatics, Lund University and doing a Master's Project with Julia Lienard
 - 📫 How to reach me: email: work.joe1299@gmail.com / +351 929372699 / Social media:thejcmoreira
 - 💼 Experience in Molecular Biology and Immunology Labs + Molecular Docking and Virtual Screening
 
